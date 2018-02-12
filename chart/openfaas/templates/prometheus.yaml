@@ -18,7 +18,7 @@ spec:
   selector:
     app: prometheus
 ---
-apiVersion: apps/v1beta1 # for versions before 1.6.0 use extensions/v1beta1
+apiVersion: apps/v1beta2 # for versions before 1.6.0 use extensions/v1beta1
 kind: Deployment
 metadata:
   labels:
@@ -31,6 +31,9 @@ metadata:
   namespace: {{ .Release.Namespace | quote }}
 spec:
   replicas: 1
+  selector:
+    matchLabels:
+      app: prometheus
   template:
     metadata:
       labels:

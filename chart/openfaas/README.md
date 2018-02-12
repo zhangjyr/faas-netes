@@ -18,22 +18,25 @@
 
 ---
 
-To use defaults including the `default` Kubernetes namespace (recommended)
+The recommended configuration uses separate namespace for OpenFaaS services and functions:
 
 ```
-$ helm upgrade --install openfaas openfaas/
-```
-
-Optional: you can also a separate namespace for functions:
-
-```
-$ kubectl create ns openfaas
-$ kubectl create ns openfaas-fn
+$ kubectl create ns openfaas \
+ && kubectl create ns openfaas-fn
 
 $ helm upgrade --install openfaas openfaas/ \
     --namespace openfaas \
     --set functionNamespace=openfaas-fn
 ```
+
+To use the `default` Kubernetes namespace (not recommended):
+
+```
+$ helm upgrade --install openfaas openfaas/ \
+    --namespace default \
+    --set functionNamespace=default
+```
+
 
 By default you will have NodePorts available for each service such as the API gateway and Prometheus
 
