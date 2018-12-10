@@ -1,4 +1,4 @@
-FROM golang:1.9.7
+FROM golang:1.10
 
 RUN mkdir -p /go/src/github.com/openfaas/faas-netes/
 

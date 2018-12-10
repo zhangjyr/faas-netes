@@ -1,21 +1,22 @@
+REGISTRY ?= zhangjyr
 TAG?=latest
 
-all: build
+all: build push
 
 local:
 	CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o faas-netes
 
 build-arm64:
-	docker build -t openfaas/faas-netes:$(TAG)-arm64 . -f Dockerfile.arm64
+	docker build -t $(REGISTRY)/faas-netes:$(TAG)-arm64 . -f Dockerfile.arm64
 
 build-armhf:
-	docker build -t openfaas/faas-netes:$(TAG)-armhf . -f Dockerfile.armhf
+	docker build -t $(REGISTRY)/faas-netes:$(TAG)-armhf . -f Dockerfile.armhf
 
 build:
-	docker build --build-arg http_proxy="${http_proxy}" --build-arg https_proxy="${https_proxy}" -t openfaas/faas-netes:$(TAG) .
+	docker build --build-arg http_proxy="${http_proxy}" --build-arg https_proxy="${https_proxy}" -t $(REGISTRY)/faas-netes:$(TAG) .
 
 push:
-	docker push alexellis2/faas-netes:$(TAG)
+	docker push $(REGISTRY)/faas-netes:$(TAG)
 
 namespaces:
 	kubectl apply -f namespaces.yml
